@@ -1,5 +1,8 @@
 import { container } from 'tsyringe';
 
+import ICacheProvider from '../../container/providers/CacheProvider/models/ICacheProvider';
+import RedisCacheProvider from '../../container/providers/CacheProvider/implementations/RedisCacheProvider';
+
 import IStorageProvider from './StorageProvider/models/IStorageProvider';
 import DiskStorageProvider from './StorageProvider/implementations/DiskStorageProvider';
 
@@ -23,3 +26,9 @@ container.registerInstance<IMailProvider>(
   'MailProvider',
   container.resolve(EtherealMailProvider),
 );
+
+const providers = {
+  redis: RedisCacheProvider,
+};
+
+container.registerSingleton<ICacheProvider>('CacheProvider', providers.redis);
